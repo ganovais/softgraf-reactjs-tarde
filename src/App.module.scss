@@ -29,7 +29,7 @@
   border-radius: 4px;
 }
 
-.post:nth-child(odd) {
+.post:nth-child(even) {
   background: #ccc;
 }
 
@@ -45,10 +45,10 @@
     border-radius: 15px;
     margin-right: 10px;
     border: none;
-  }
 
-  button:hover {
-    background: rgb(34, 9, 143);
-    color: #fff;
+    &:hover {
+      background: rgb(34, 9, 143);
+      color: #fff;
+    }
   }
 }

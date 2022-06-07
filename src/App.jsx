@@ -5,10 +5,11 @@ import styles from './App.module.scss';
 function App() {
   const [isShowing, setIsShowing] = useState(true);
   const [posts, setPosts] = useState([]);
+  const [post, setPost] = useState();
 
   useEffect(() => {
     async function getPosts() {
-      const { data: posts } = await axios.get(
+      let { data: posts } = await axios.get(
         'https://jsonplaceholder.typicode.com/posts'
       );
 
@@ -19,6 +20,14 @@ function App() {
 
     getPosts();
   }, []);
+
+  async function handleGetInformation(id) {
+    const { data: post } = await axios.get(
+      `https://jsonplaceholder.typicode.com/posts/${id}`
+    );
+
+    setPost(post);
+  }
 
   function handleRemove(id) {
     const newPosts = [...posts];
@@ -46,6 +55,13 @@ function App() {
         </button>
       </div>
 
+      {post && (
+        <div className={styles.card}>
+          <h3>{post.title}</h3>
+          <p>{post.body}</p>
+        </div>
+      )}
+
       <div className={styles.card}>
         <h3>Posts</h3>
         {posts.length
@@ -53,7 +69,9 @@ function App() {
               <div className={styles.post} key={post.id}>
                 <p>{post.id + ' - ' + post.title}</p>
                 <div className={styles.actions}>
-                  <button>I</button>
+                  <button onClick={() => handleGetInformation(post.id)}>
+                    I
+                  </button>
                   <button onClick={() => handleRemove(post.id)}>A</button>
                 </div>
               </div>
